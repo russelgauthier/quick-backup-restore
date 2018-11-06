@@ -7,12 +7,13 @@ import time
 import tarfile
 
 if len(sys.argv) != 2:
-    print("Error: must pass the name of the file to be backed up.")
-    exit()
+    sys.exit("Error: must pass the name of the file to be backed up.")
 
 fileName = sys.argv[1]
 now = datetime.datetime.now()
 
+if not os.path.exists(fileName):
+    sys.exit("The specified file nor directory exists: %s" % (fileName))
 
 if not os.path.isfile(fileName):
     newName = "%s.tbz2-BACKUP-%.2d%.2d%.2d-%.2d%.2d%.2d-%s" % (fileName,now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
