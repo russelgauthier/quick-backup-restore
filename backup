@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import sys
+import os
+import shutil
+import datetime
+import time
+import tarfile
+
+if len(sys.argv) != 2:
+    print("Error: must pass the name of the file to be backed up.")
+    exit()
+
+fileName = sys.argv[1]
+now = datetime.datetime.now()
+
+
+if not os.path.isfile(fileName):
+    newName = "%s.tbz2-BACKUP-%.2d%.2d%.2d-%.2d%.2d%.2d-%s" % (fileName,now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
+    
+    tar = tarfile.open(newName, "w:bz2")
+    tar.add(fileName)
+    tar.close()
+else:
+    newName = "%s-BACKUP-%.2d%.2d%.2d-%.2d%.2d%.2d-%s" % (fileName,now.year,now.month,now.day,now.hour,now.minute,now.second,now.microsecond)
+    shutil.copy(fileName, newName)
+
+    
